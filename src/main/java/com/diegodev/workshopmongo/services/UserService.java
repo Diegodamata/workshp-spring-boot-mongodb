@@ -34,10 +34,17 @@ public class UserService {
 		
 	}
 	
+	public void delete(String id) {
+		findById(id);
+		userRepository.deleteById(id);
+	}
+	
 	//metodo para transformar um userDto para user
 	public User fromDto(UserDTO obj) {
 		
 		return new User(obj.getId(), obj.getName(), obj.getEmail());
 		
 	}
+	
+	
 }
