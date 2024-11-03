@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.diegodev.workshopmongo.domain.Post;
 import com.diegodev.workshopmongo.domain.User;
 import com.diegodev.workshopmongo.dto.UserDTO;
 import com.diegodev.workshopmongo.services.UserService;
@@ -68,5 +69,16 @@ public class UserResource {
 		user.setId(id);
 		userService.update(user);
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	//Retornando a lista de posts de um determinado usuario
+	//aqui ira trazer o posts do usuario pois eu estou explicitando que eu quero pegar o usuario e o posts que pertence a ele
+	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPost(@PathVariable String id){
+		
+		User user = userService.findById(id);
+		return ResponseEntity.ok().body(user.getPosts());
+
 	}
 }
