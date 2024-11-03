@@ -1,9 +1,12 @@
 package com.diegodev.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //como estou trabalhando com o mongoDB banco orientado a documentos informo que essa classe é um document
@@ -17,6 +20,13 @@ public class User implements Serializable{
 	private String id;
 	private String name;
 	private String email;
+	
+	//no spring data para eu informar que uma coleção esta referenciando uma outra coleção eu uso o DBRef
+	//o lazy = true quer dizer que como eu to referenciando um coleção, é ruim que busque todos os usuario e trazer pra mim
+	//todos os posts desse usuario geraria um trafego da rede desnecessario,
+	//então eu utilizo essa anotação para garantir que o post vão ser carregados se eu explicitamente acessalos
+	@DBRef(lazy = true) 
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 	}
@@ -49,6 +59,10 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
 	}
 
 	@Override
