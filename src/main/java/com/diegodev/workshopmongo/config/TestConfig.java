@@ -46,12 +46,6 @@ public class TestConfig implements CommandLineRunner{
 		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom Dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		
-		postRepository.saveAll(Arrays.asList(post1, post2));
-		
-		maria.getPosts().add(post1);
-		maria.getPosts().add(post2);
-		
-		userRepository.save(maria);
 		
 		post1.getComments().add(new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex)));
 		post1.getComments().add(new CommentDTO("Aproveite!", sdf.parse("22/03/2018"), new AuthorDTO(bob)));
@@ -59,6 +53,11 @@ public class TestConfig implements CommandLineRunner{
 		post2.getComments().add(new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex)));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
+		
+		maria.getPosts().add(post1);
+		maria.getPosts().add(post2);
+		
+		userRepository.save(maria);
 	}
 
 }
