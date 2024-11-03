@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.diegodev.workshopmongo.domain.Post;
 import com.diegodev.workshopmongo.domain.User;
+import com.diegodev.workshopmongo.dto.AuthorDTO;
 import com.diegodev.workshopmongo.repository.PostRepository;
 import com.diegodev.workshopmongo.repository.UserRepository;
 
@@ -37,10 +38,13 @@ public class TestConfig implements CommandLineRunner{
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", maria);
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom Dia", "Acordei feliz hoje!", maria);
-		
+		//preciso persistir os users antes de associar o author ao post senão o id ficara nulo, pois o mongo não criou ainda 
+		//um id para esse usuario, e ficara nulo, por isso preciso persistir primeiro
 		userRepository.saveAll(Arrays.asList(maria,alex,bob));
+		
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom Dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 	}
 
