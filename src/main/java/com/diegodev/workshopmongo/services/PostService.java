@@ -30,6 +30,6 @@ public class PostService {
 	//e chamo o metodo que eu defini na interface, assim pego todos os titulos dos posts
 	public List<Post> findByTitle(String tittle){
 	
-		return post.findByTittleContainingIgnoreCase(tittle);
+		return post.findByTittle(tittle);
 	}
 }
