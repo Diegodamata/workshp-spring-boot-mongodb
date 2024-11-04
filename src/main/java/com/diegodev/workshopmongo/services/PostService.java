@@ -1,5 +1,6 @@
 package com.diegodev.workshopmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,12 @@ public class PostService {
 			throw new ObjectNotFoundException("Post não encontrado!");
 		}
 		return po.get();
+	}
+	
+	//metodo que ira retornar uma lista de titulos dos posts, acesso o o postRepository
+	//e chamo o metodo que eu defini na interface, assim pego todos os titulos dos posts
+	public List<Post> findByTitle(String tittle){
+	
+		return post.findByTittleContainingIgnoreCase(tittle);
 	}
 }
