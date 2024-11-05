@@ -43,14 +43,14 @@ public class TestConfig implements CommandLineRunner{
 		//um id para esse usuario, e ficara nulo, por isso preciso persistir primeiro
 		userRepository.saveAll(Arrays.asList(maria,alex,bob));
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom Dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		Post post1 = new Post(null, sdf.parse("24/11/2024"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("24/11/2024"), "Bom Dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		
 		
-		post1.getComments().add(new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex)));
-		post1.getComments().add(new CommentDTO("Aproveite!", sdf.parse("22/03/2018"), new AuthorDTO(bob)));
+		post1.getComments().add(new CommentDTO("Boa viagem mano!", sdf.parse("21/11/2024"), new AuthorDTO(alex)));
+		post1.getComments().add(new CommentDTO("Aproveite!", sdf.parse("23/11/2024"), new AuthorDTO(bob)));
 		
-		post2.getComments().add(new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex)));
+		post2.getComments().add(new CommentDTO("Tenha um ótimo dia!", sdf.parse("24/11/2024"), new AuthorDTO(alex)));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		

@@ -1,5 +1,6 @@
 package com.diegodev.workshopmongo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,11 +12,15 @@ import com.diegodev.workshopmongo.domain.Post;
 @Repository
 public interface PostRepository extends MongoRepository<Post, String>{
 	
+	//--------------------------Opção 1-----------------------------------------------
+	
 	//pelo nome do metodo o Spring Data consegue gerar pra mim uma consulta automaticamente
 	//aqui esta gerando uma lista de titulos dos posts
 	//esse metodo(contrato) ira retornar uma lista dos titulos dos posts
 	//com essa declaração ja faz com que o spring data monte pra mim a consulta (query methods)
 	List<Post> findByTittleContainingIgnoreCase(String tittle);
+	
+	//--------------------------Opção 2---------------------------------------
 	
 	//tambem buscar o post com base no tittle, essa é uma outra forma alternativa de fazer a consulta
 	//porem esse não ira conter um nome proprio do Spring Data para fazer a consulta, essa irá ser uma consultta
@@ -32,4 +37,16 @@ public interface PostRepository extends MongoRepository<Post, String>{
 	@Query("{ 'tittle': { $regex: ?0, $options: 'i' } }")
 	List<Post> findByTittle(String text);
 	
+	//------------------------------------Opção 3 -----------------------------------
+	
+	//Consulta com vários critérios
+	//"Buscar posts contendo um dado string em qualquer lugar (no título, corpo ou comentários) e em um dado
+	//intervalo de datas"
+	
+	//essa consulta eu vou querer buscar um text em qualquer lugar do post, ex: titulo, comentari ou corpo
+	//e tambem irei informar a data minima para esse post e a data maxima
+	
+	@Query("{ $and: [ { date: {$gte: ?1} }, { date: { $lte: ?2} } , { $or: [ { 'tittle': { $regex: ?0, $options: 'i' } }, { 'body': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Post> fullSearch(String text, Date minDate, Date maxDate);
+
 }

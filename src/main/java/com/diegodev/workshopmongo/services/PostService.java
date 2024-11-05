@@ -1,5 +1,6 @@
 package com.diegodev.workshopmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +32,15 @@ public class PostService {
 	public List<Post> findByTitle(String tittle){
 	
 		return post.findByTittle(tittle);
+	}
+	
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate){
+		//se eu quiser encontrar um post ate uma certa data, eu preciso adicionar 1 dia a mais, pois se eu quiser
+		//encontrar uma data ate um determinado dia eu preciso, encontrar ate a meia noite daquele dia
+		
+		//macete para adicionar mais 24 horas na data, instancio um date, passo a minha data atual com o getTime() que é valor em milisegundos
+		//e somo com 24 horas, porem preciso converter 24 hrs para milisegundos (24 * 60 * 60 * 1000)
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return post.fullSearch(text, minDate, maxDate);
 	}
 }
